@@ -1,5 +1,3 @@
-const { transform } = require("babel-core")
-
 const fi = (function() {
   return {
     libraryMethod: function() {
@@ -138,26 +136,49 @@ const fi = (function() {
         }
       }
       return new_array
-    }
-    // uniq: function(array, isSorted = false, callback) {
-    //   const new_array = []
-    //   if (!callback) {
-    //     for (let elem of array) {
-    //       if (!new_array.includes(elem)) {
-    //         new_array.push(elem)
-    //       }
-    //     }
-    //   } else {
-    //     const transformed_elems = []
-    //     for (let elem of array) {
-    //       transformed_elems.push(callback(elem))
-    //       if (!transformed_elems.includes(callback(elem))) {
-    //         new_array.push(elem)
-    //       }
-    //     }
-    //   }
-    //   return new_array
-    // }
+    },
+    uniq: function(array, isSorted = false, callback) {
+      const new_array = []
+      if (!callback) {
+        for (let elem of array) {
+          if (!new_array.includes(elem)) {
+            new_array.push(elem)
+          }
+        }
+      } else {
+        const transformed_elems = []
+        for (let elem of array) {
+          if (!transformed_elems.includes(callback(elem))) {
+            new_array.push(elem)
+          }
+          transformed_elems.push(callback(elem))
+        }
+      }
+      return new_array
+    },
+    keys: function(object) {
+      const keys = []
+      for (let key in object) {
+        keys.push(key)
+      }
+      return keys
+    },
+    values: function(object) {
+      const values = []
+      for (let key in object) {
+        values.push(object[key])
+      }
+      return values
+    },
+    functions: function(object) {
+      const functions = []
+      for (let key in object) {
+        if (typeof object[key] === 'function') {
+          functions.push(key)
+        }
+      }
+      return functions.sort()
+    },
   }
 })()
 
